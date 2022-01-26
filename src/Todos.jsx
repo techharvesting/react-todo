@@ -14,18 +14,6 @@ const Todos = () => {
     }
   }, []);
 
-  const addTodo = () => {
-    const newTodo = {
-      id: nanoid(12),
-      name: newTodoName,
-      done: false,
-    };
-    setTodos([...todos, newTodo]);
-    localStorage.setItem('todos', JSON.stringify([...todos, newTodo]));
-    // console.log(todos)
-    setNewTodoName('');
-  };
-
   const onCheck = (id) => {
     const newTodos = todos.map((todo) => {
       if (todo.id === id) {
@@ -33,7 +21,6 @@ const Todos = () => {
       }
       return todo;
     });
-    console.log(newTodos);
     setTodos(newTodos);
     localStorage.setItem('todos', JSON.stringify(newTodos));
   };
@@ -44,9 +31,16 @@ const Todos = () => {
     localStorage.setItem('todos', JSON.stringify(newTodos));
   };
 
-  const handleAddTodo = (e) => {
+  const handleNewTodo = (e) => {
     e.preventDefault();
-    addTodo();
+    const newTodo = {
+      id: nanoid(12),
+      name: newTodoName,
+      done: false,
+    };
+    setTodos([...todos, newTodo]);
+    localStorage.setItem('todos', JSON.stringify([...todos, newTodo]));
+    setNewTodoName('');
   };
 
   return (
@@ -61,7 +55,7 @@ const Todos = () => {
           />
         ))}
       </div>
-        <form onSubmit={handleAddTodo} className='flex mt-10'>
+        <form onSubmit={handleNewTodo} className='flex mt-10'>
           <input
             type='text'
             value={newTodoName}
